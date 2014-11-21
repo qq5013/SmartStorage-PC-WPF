@@ -1,0 +1,108 @@
+﻿<Controls:MetroWindow x:Class="RFIDStorageUltimate.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:Local="clr-namespace:RFIDStorageUltimate"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Name="MetroMainWindow" Title="登录界面" Height="350" Width="400"
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" AllowsTransparency="True"
+        GlowBrush="{DynamicResource AccentColorBrush}" Icon="Images/MainTitle.png" Closing="MetroMainWindow_Closing">
+    <Controls:MetroWindow.WindowCommands>
+        <Controls:WindowCommands>
+            <Button x:Name="SkinButton" Click="SkinButton_Click" IsTabStop="False">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Images/Skin.png"/>
+                    <TextBlock Text="色调" Foreground="White" Margin="0,6,0,0" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="ThemeButton" Click="ThemeButton_Click" IsTabStop="False">
+                <StackPanel Orientation="Horizontal">
+                    <Image x:Name="ThemeImage" Source="Images/Dark.png"/>
+                    <TextBlock Text="主题" Foreground="White" Margin="0,6,0,0" />
+                </StackPanel>
+            </Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.WindowCommands>
+    <Controls:TransitioningContentControl x:Name="MainControl" Transition="Left">
+        <StackPanel x:Name="MainPanel" Orientation="Vertical">
+            <StackPanel x:Name="TopPanel" Orientation="Vertical">
+                <StackPanel x:Name="LinearPanel" Height="70">
+                    <StackPanel.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="{DynamicResource AccentColor}" Offset="0"/>
+                            <GradientStop Color="{DynamicResource AccentColor2}" Offset="1"/>
+                        </LinearGradientBrush>
+                    </StackPanel.Background>
+                </StackPanel>
+                <StackPanel x:Name="OperatePanel" Height="220">
+                    <StackPanel Orientation="Horizontal" Height="150">
+                        <StackPanel.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="{DynamicResource AccentColor2}" Offset="0"/>
+                                <GradientStop Color="#CCDEDEDE" Offset="0.2"/>
+                            </LinearGradientBrush>
+                        </StackPanel.Background>
+                        <StackPanel x:Name="ImagePanel" Width="150">
+                            <StackPanel x:Name="LogoPanel" Height="120" Width="120" Margin="30,15,0,15" Background="{DynamicResource AccentColorBrush}">
+                                <StackPanel.Effect>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="0" Color="{DynamicResource AccentColor}"/>
+                                </StackPanel.Effect>
+                                <Image Source="Images/Logo.png"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel x:Name="TextPanel" Width="250" Orientation="Vertical">
+                            <TextBox x:Name="UsernameTextBox" TextWrapping="Wrap" Height="30" Width="200" MaxLines="1" MaxLength="10" FontSize="16" Margin="0,30,0,0" Controls:TextboxHelper.ClearTextButton="True" Controls:TextboxHelper.Watermark="用户名"  Controls:TextboxHelper.SelectAllOnFocus="True" InputMethod.IsInputMethodEnabled="False">
+                                <TextBox.Text>
+                                    <Binding Path="Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <Local:NotNullValidationRule x:Name="UsernameValidationRule"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            <TextBox x:Name="PasswordTextBox" TextWrapping="Wrap" Height="30" Width="200" MaxLines="1" MaxLength="20" FontSize="16" Margin="0,30,0,0" Controls:TextboxHelper.ClearTextButton="True" Controls:TextboxHelper.Watermark="密  码"  Controls:TextboxHelper.SelectAllOnFocus="True" InputMethod.IsInputMethodEnabled="False" PreviewKeyDown="PasswordTextBox_PreviewKeyDown" >
+                                <TextBox.Text>
+                                    <Binding Path="Password" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <Local:NotNullValidationRule x:Name="PasswordValidationRule"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                    </StackPanel>
+                    <ProgressBar x:Name="loginBar" IsIndeterminate="False"/>
+                    <StackPanel Height="60">
+                        <StackPanel.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#CCDEDEDE" Offset="0"/>
+                                <GradientStop Color="{DynamicResource AccentColor2}" Offset="0.1"/>
+                                <GradientStop Color="{DynamicResource AccentColor}" Offset="1"/>
+                            </LinearGradientBrush>
+                        </StackPanel.Background>
+                        <Button x:Name="LoginButton" IsDefault="True" Content="进    入"  FontSize="23" Width="200" Height="40" Margin="0,10" Foreground="{DynamicResource HighlightBrush}" Click="LoginButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <StatusBar Height="30" Background="{DynamicResource AccentColorBrush}">
+                <TextBlock x:Name="StatusTextBlock" TextWrapping="Wrap" Text="Copyright@RFID智能仓储小组" Margin="110,0,0,0" Foreground="White"/>
+            </StatusBar>
+        </StackPanel>
+    </Controls:TransitioningContentControl>
+    <Window.Resources>
+        <ResourceDictionary>
+            <Storyboard x:Key="LoginStoryBoard">
+                <ThicknessAnimation Duration="0:0:0.3" To="110,0,0,0" Storyboard.TargetName="ImagePanel" Storyboard.TargetProperty="Margin"/>
+                <DoubleAnimation Duration="0:0:0.3" To="0" Storyboard.TargetName="TextPanel" Storyboard.TargetProperty="Opacity"/>
+                <DoubleAnimation Duration="0:0:0.1" To="15" Storyboard.TargetName="LogoPanel" Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.BlurRadius)"/>
+            </Storyboard>
+            <Storyboard x:Key="CancelStoryBoard">
+                <ThicknessAnimation Duration="0:0:0.1" To="0,0,0,0" Storyboard.TargetName="ImagePanel" Storyboard.TargetProperty="Margin"/>
+                <DoubleAnimation Duration="0:0:0.1" To="1" Storyboard.TargetName="TextPanel" Storyboard.TargetProperty="Opacity"/>
+                <DoubleAnimation Duration="0:0:0.1" To="0" Storyboard.TargetName="LogoPanel" Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.BlurRadius)"/>
+            </Storyboard>
+            <Storyboard x:Key="CloseStoryBoard">
+                <DoubleAnimation Duration="0:0:0.3" To="0" Storyboard.TargetName="MetroMainWindow" Storyboard.TargetProperty="Opacity"/>
+            </Storyboard>
+        </ResourceDictionary>
+    </Window.Resources>
+</Controls:MetroWindow>
